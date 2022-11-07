@@ -9,6 +9,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Container from '@mui/material/Container';
 
 function LoginCustomer() {
     const [inputs, setInputs] = useState({
@@ -41,6 +42,7 @@ function LoginCustomer() {
         .then(user =>{
             console.log(user)
             setInputs(user)
+            window.localStorage.setItem('session', JSON.stringify(user.id))
             navigate("/")
         }
         ).catch(err => console.log("Login error", err));
@@ -61,43 +63,53 @@ function LoginCustomer() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <TextField
-                id="input-with-icon-textfield"
-                label="Enter your email address:"
-                name="email"
-                InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                    <AccountCircle />
-                    </InputAdornment>
-                ),
-                }}
-                value={inputs.email}
-                onChange={handleChange}
-                variant="standard"
-            />
-                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                <Input
-                    id="standard-adornment-password"
-                    name="password"
-                    type={inputs.showPassword ? 'text' : 'password'}
-                    value={inputs.password}
+        <Container maxWidth="sm">
+            <form onSubmit={handleSubmit}>
+                <TextField
+                    id="input-with-icon-textfield"
+                    label="Enter your email address:"
+                    name="email"
+                    InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                        <AccountCircle />
+                        </InputAdornment>
+                    ),
+                    }}
+                    value={inputs.email}
                     onChange={handleChange}
-                    endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        >
-                        {inputs.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>
-                    }
+                    variant="standard"
+                    margin="dense" 
+                    sx={{
+                        // // display: 'flex',
+                        // // flexDirection: 'column',
+                        // height: 80,
+                        marginTop: 15,
+                        // marginLeft: 5
+                    }}
                 />
-                <Button variant="contained" type="submit">Customer Login</Button>
-        </form>
+                    <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                    <Input
+                        id="standard-adornment-password"
+                        name="password"
+                        type={inputs.showPassword ? 'text' : 'password'}
+                        value={inputs.password}
+                        onChange={handleChange}
+                        endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            >
+                            {inputs.showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                        }
+                    />
+                    <Button variant="contained" type="submit">Customer Login</Button>
+            </form>
+        </Container>
     );
    
 }

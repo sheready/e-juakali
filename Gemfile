@@ -53,3 +53,6 @@ gem "active_model_serializers", "~> 0.10.12"
 gem 'devise'
 
 gem 'jsonapi-serializer'
+gem 'cancancan'
+gem 'activerecord-session_store'
+

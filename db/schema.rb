@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_21_053730) do
+ActiveRecord::Schema.define(version: 2022_10_27_105528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 2022_10_21_053730) do
     t.index ["unlock_token"], name: "index_admins_on_unlock_token", unique: true
   end
 
+  create_table "login_sessions", force: :cascade do |t|
+    t.inet "ip_address"
+    t.text "properties"
+    t.integer "status"
+    t.string "session_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id"], name: "index_login_sessions_on_session_id"
+    t.index ["user_id"], name: "index_login_sessions_on_user_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.datetime "date_ordered"
     t.decimal "total"
@@ -58,6 +70,15 @@ ActiveRecord::Schema.define(version: 2022_10_21_053730) do
     t.string "category"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -115,4 +136,5 @@ ActiveRecord::Schema.define(version: 2022_10_21_053730) do
     t.index ["unlock_token"], name: "index_vendors_on_unlock_token", unique: true
   end
 
+  add_foreign_key "login_sessions", "users"
 end

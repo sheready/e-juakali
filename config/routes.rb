@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+ 
   #http://localhost:3000/users/sign_in
   devise_for :users, path: 'users', 
                     path_names: {
@@ -12,6 +12,7 @@ Rails.application.routes.draw do
                     passwords: 'user/passwords',
                     registrations: 'user/registrations'
   } 
+  
   #http://localhost:3000/admins/sign_in
   devise_for :admins, path: 'admins',
                       path_names: {
@@ -37,23 +38,22 @@ Rails.application.routes.draw do
                           passwords: 'vendor/passwords',
                           registrations: 'vendor/registrations'
                        }
-  # devise_scope :admin do
-  #   authenticated :admin do
-  #     namespace :admin do
-  #       get 'admins/index',  as: :authenticated_root
-  #     end
-  #     # root 'admin/admins#index', as: :auth_admin_root
-  #   end
+  # namespace :users do
+  #   get 'users/index'
+
+  #   # root 'admin/admins#index', as: :auth_admin_root
   # end
+
   
-  # devise_scope :user do
-  #   authenticated :user do
-  #     namespace :user do
-  #       get 'users/index',  as: :authenticated_root
-  #     end
-  #     # root 'user/users#index', as: :auth_user_root
-  #   end
-  # end
+  devise_scope :user do
+    authenticated :user do
+      namespace :user do
+        get 'users/index'
+        get 'users/users'
+      end
+      # root 'user/users#index', as: :auth_user_root
+    end
+  end
 
   # devise_scope :vendor do
   #   authenticated :vendor do

@@ -22,8 +22,10 @@ Bundler.require(*Rails.groups)
 module ReactRailsApiProjectTemplate
   class Application < Rails::Application
     # Adding cookies and session middleware
+    config.session_store :cookie_store, key: '_interslice_session'
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use config.session_store, config.session_options
+   
 
     # Use SameSite=Strict for all cookies to help protect against CSRF
     # https://owasp.org/www-community/SameSite
@@ -45,5 +47,9 @@ module ReactRailsApiProjectTemplate
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.middleware.use ActionDispatch::Flash
+    ActiveRecord::SessionStore::Session.table_name = 'sessions'
+    ActiveRecord::SessionStore::Session.primary_key = 'session_id'
+    ActiveRecord::SessionStore::Session.data_column_name = 'data'
+    ActiveRecord::SessionStore::Session.serializer = :json
   end
 end

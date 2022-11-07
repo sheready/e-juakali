@@ -10,4 +10,6 @@ class Vendor::VendorsController < ApplicationController
     current_vendor || current_admin
   end
 
+  
+
 end

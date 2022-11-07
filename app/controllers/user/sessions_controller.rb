@@ -7,9 +7,9 @@ class User::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    super
+  end
 
   # # POST /resource/sign_in
   def create
@@ -17,6 +17,7 @@ class User::SessionsController < Devise::SessionsController
     if @user && @user.valid_password?(user_params[:password])
       sign_in :user, @user
       render json: @user
+      session[:current_user_id] = @user.id
     elsif @user && not(@user.valid_password?(user_params[:password]))
       invalid_attempt
     else
@@ -26,6 +27,8 @@ class User::SessionsController < Devise::SessionsController
 
   # # DELETE /resource/sign_out
   def destroy
+    session.delete(:current_user_id)
+    @_current_user = nil
     @message = "signed out"
     sign_out(@user)
     render json: @message
@@ -50,6 +53,11 @@ class User::SessionsController < Devise::SessionsController
   def user_params
     params.require(:user).permit(:email, :password)
   end
+
+
+  protected
+
+ 
 
   # def respond_with(resource, _opts = {})
   #   render json: {
