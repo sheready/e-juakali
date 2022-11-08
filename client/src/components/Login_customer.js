@@ -43,7 +43,7 @@ function LoginCustomer() {
             console.log(user)
             setInputs(user)
             window.localStorage.setItem('session', JSON.stringify(user.id))
-            navigate("/")
+            navigate("/users/dashboard")
         }
         ).catch(err => console.log("Login error", err));
 
@@ -63,15 +63,19 @@ function LoginCustomer() {
     };
 
     return (
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: 15
+        }}>
             <form onSubmit={handleSubmit}>
+                <InputLabel htmlFor="input-with-icon-textfield">Email:</InputLabel>
                 <TextField
                     id="input-with-icon-textfield"
-                    label="Enter your email address:"
                     name="email"
                     InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
+                    endAdornment: (
+                        <InputAdornment position="end">
                         <AccountCircle />
                         </InputAdornment>
                     ),
@@ -80,34 +84,36 @@ function LoginCustomer() {
                     onChange={handleChange}
                     variant="standard"
                     margin="dense" 
-                    sx={{
-                        // // display: 'flex',
-                        // // flexDirection: 'column',
-                        // height: 80,
-                        marginTop: 15,
-                        // marginLeft: 5
-                    }}
+               
                 />
-                    <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                    <Input
-                        id="standard-adornment-password"
-                        name="password"
-                        type={inputs.showPassword ? 'text' : 'password'}
-                        value={inputs.password}
-                        onChange={handleChange}
-                        endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            >
-                            {inputs.showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                        }
-                    />
-                    <Button variant="contained" type="submit">Customer Login</Button>
+                <InputLabel htmlFor="standard-adornment-password"  sx={{
+                        marginTop: 2
+                    }}>Password:</InputLabel>
+                <Input
+                    id="standard-adornment-password"
+                    name="password"
+                    type={inputs.showPassword ? 'text' : 'password'}
+                    value={inputs.password}
+                    onChange={handleChange}
+                    endAdornment={
+                    <InputAdornment position="end">
+                        <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        >
+                        {inputs.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </InputAdornment>
+                    }
+                
+                />
+                <Button variant="contained" type="submit" sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginTop: 2,
+                    marginLeft: 5
+                }}>Customer Login</Button>
             </form>
         </Container>
     );

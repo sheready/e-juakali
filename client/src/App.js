@@ -10,6 +10,7 @@ import Logout from "./components/Logout";
 import SignInAdmin from "./components/Signup_admin";
 import SignInCustomer from "./components/Signup_customer";
 import SignInVendor from "./components/Signup_vendor";
+import UserDashboard from "./components/User_dashboard";
 import VendorDashboard from "./components/Vendor_dashboard";
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
         <Route path="admins/signup" element={<SignInAdmin />} />
         <Route path="users/signup" element={<SignInCustomer />} />
         <Route path="admins/users" element={<GetUsers />} />
-        <Route path="users/dashboard" element={<Logout />} />
+        <Route path="users/dashboard" element={<UserDashboard />} />
     </Routes>
      </BrowserRouter>
     // <div className="App">
